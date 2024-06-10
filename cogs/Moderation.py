@@ -38,6 +38,16 @@ class Moderation(commands.Cog):
         await ctx.send(embed=conf_embed)
 
 #   -----------UnBan Command---------------
+    @commands.command(name="unban")
+    @commands.guild_only()
+    @commands.has_permissions(ban_members=True)
+    async def unban(self, ctx, userId):
+        user = discord.Object(id=userId)
+        await ctx.guild.unban(user)
+
+        conf_embed = discord.Embed(title="Unban Success", color=discord.Color.pink())
+        conf_embed.add_field(name="Unbanned", value=f"@<{userId}>, has been unbanned by {ctx.author.mention}.", inline=False)
+        await ctx.send(embed=conf_embed)
 
 async def setup(bot):
     await bot.add_cog(Moderation(bot))
